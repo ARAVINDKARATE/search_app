@@ -6,12 +6,12 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   bool showLogo = true;
-  String _searchQuery = ''; // Track the search query
+  String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: GestureDetector(
         onTap: () {
-          // When tapping outside of the TextField
           if (_searchQuery.isEmpty) {
             setState(() {
-              showLogo = true; // Show logo again
+              showLogo = true;
             });
           }
         },
@@ -111,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Conditionally display the logo based on the search query
                 if (showLogo && _searchQuery.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 109, bottom: 20),
@@ -138,14 +136,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: const BorderSide(
-                          color: Color(0xFFD7D7EA), // Color when focused
-                          width: 2, // Optional: Change width when focused
+                          color: Color(0xFFD7D7EA),
+                          width: 2,
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         borderSide: const BorderSide(
-                          color: Color(0xFFD7D7EA), // Color when not focused but enabled
+                          color: Color(0xFFD7D7EA),
                           width: 2,
                         ),
                       ),
@@ -159,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       if (_searchQuery.isEmpty) {
                         setState(() {
-                          showLogo = false; // Hide logo when tapping the search bar
+                          showLogo = false;
                         });
                       }
                     },
@@ -172,17 +170,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-                // Loading indicator when users are being fetched
                 if (userProvider.isLoading) const Center(child: CircularProgressIndicator()),
-
-                // Display search results using ListView.builder if search query is not empty
-                // Display search results using ListView.builder if search query is not empty
                 if (!userProvider.isLoading && _searchQuery.isNotEmpty)
                   Expanded(
-                    child: filteredUsers.isEmpty // Check if filteredUsers is empty
+                    child: filteredUsers.isEmpty
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -289,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(8.0),
                                                 ),
-                                                backgroundColor: Colors.black, // Button color
+                                                backgroundColor: Colors.black,
                                               ),
                                               child: const Text(
                                                 'Fetch Details',
@@ -320,12 +312,12 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return Dialog(
-          elevation: 0, // No shadow for a clean look
-          backgroundColor: Colors.transparent, // Make background transparent for full customization
+          elevation: 0,
+          backgroundColor: Colors.transparent,
           child: Container(
-            width: 299, // Fixed width
-            height: 447, // Fixed height
-            padding: const EdgeInsets.only(top: 22.22, left: 22.22, right: 0, bottom: 0), // Custom padding
+            width: 299,
+            height: 447,
+            padding: const EdgeInsets.only(top: 22.22, left: 22.22, right: 0, bottom: 0),
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(7.41),
@@ -333,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottomRight: Radius.zero,
                 bottomLeft: Radius.zero,
               ),
-              color: Colors.white, // Background color for the dialog
+              color: Colors.white,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -364,7 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 12.96,
                     fontWeight: FontWeight.w400,
                     height: 1.2,
-                    color: Color(0xFF71717A), // Use the provided hexadecimal color
+                    color: Color(0xFF71717A),
                   ),
                 ),
                 const SizedBox(
@@ -376,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 12.96,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
-                      color: Color(0xFF09090B), // Use the provided hexadecimal color
+                      color: Color(0xFF09090B),
                     )),
                 Text('Location: $location',
                     style: const TextStyle(
@@ -384,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 12.96,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
-                      color: Color(0xFF09090B), // Use the provided hexadecimal color
+                      color: Color(0xFF09090B),
                     )),
                 Text('Contact Number: $contact',
                     style: const TextStyle(
@@ -392,16 +384,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontSize: 12.96,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
-                      color: Color(0xFF09090B), // Use the provided hexadecimal color
+                      color: Color(0xFF09090B),
                     )),
-                const SizedBox(height: 14.81), // Custom gap
+                const SizedBox(height: 14.81),
                 const Text('Profile Image:',
                     style: const TextStyle(
                       fontFamily: 'Inter',
                       fontSize: 12.96,
                       fontWeight: FontWeight.w500,
                       height: 1.2,
-                      color: Color(0xFF09090B), // Use the provided hexadecimal color
+                      color: Color(0xFF09090B),
                     )),
                 const SizedBox(
                   height: 14,

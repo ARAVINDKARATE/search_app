@@ -24,15 +24,6 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // List<User> searchUsers(String query) {
-  //   if (query.isEmpty) {
-  //     return _users;
-  //   }
-  //   return _users.where((user) {
-  //     return user.firstName.toLowerCase().contains(query.toLowerCase()) || user.lastName.toLowerCase().contains(query.toLowerCase());
-  //   }).toList();
-  // }
-
   void searchUsers(String query) {
     _isSearching = query.isNotEmpty;
     notifyListeners();
@@ -66,13 +57,10 @@ class UserProvider with ChangeNotifier {
       try {
         await launchUrl(emailUri);
       } catch (e) {
-        // Handle any exceptions that may occur
         print('Error launching email client: $e');
       }
     } else {
-      // Notify the user or log the issue
       print('No email client available');
-      // Optionally, display a Toast or Alert to the user
     }
   }
 
