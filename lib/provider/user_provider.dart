@@ -42,8 +42,8 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchUsersFromFirebase({int limit = 10, DocumentSnapshot? lastDocument}) async {
-    Query query = _firestore.collection('users').limit(limit);
+  Future<void> fetchUsersFromFirebase({DocumentSnapshot? lastDocument}) async {
+    Query query = _firestore.collection('users');
 
     if (lastDocument != null) {
       query = query.startAfterDocument(lastDocument);
