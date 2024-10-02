@@ -14,11 +14,20 @@ class HomeScreenState extends State<HomeScreen> {
   String _searchQuery = '';
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<UserProvider>(context, listen: false).loadUsers();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final filteredUsers = userProvider.getFilteredUsers(_searchQuery);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         toolbarHeight: 66,
         shadowColor: Colors.black,
@@ -170,8 +179,19 @@ class HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
-                if (userProvider.isLoading) const Center(child: CircularProgressIndicator()),
+                const SizedBox(height: 40),
+                if (userProvider.isLoading)
+                  const Center(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text("Syncing User Data With FireBase....")
+                    ],
+                  )),
                 if (!userProvider.isLoading && _searchQuery.isNotEmpty)
                   Expanded(
                     child: filteredUsers.isEmpty
@@ -232,7 +252,7 @@ class HomeScreenState extends State<HomeScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${user.firstName} ${user.lastName}',
+                                            '${user.first_name} ${user.last_name}',
                                             style: const TextStyle(fontSize: 27, fontWeight: FontWeight.w600),
                                           ),
                                           const SizedBox(height: 4),
@@ -263,7 +283,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                 children: [
                                                   const Icon(Icons.phone_rounded, size: 12),
                                                   const SizedBox(width: 2),
-                                                  Text(user.contactNumber, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF000000))),
+                                                  Text(user.contact_number, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF000000))),
                                                 ],
                                               ),
                                               const SizedBox(height: 4),
@@ -275,7 +295,7 @@ class HomeScreenState extends State<HomeScreen> {
                                             width: 120,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                _showDetailsDialog(user.firstName, user.lastName, user.city, user.contactNumber, "assets/images/profile.png");
+                                                _showDetailsDialog(user.first_name, user.last_name, user.city, user.contact_number, "assets/images/profile.png");
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -5,6 +6,8 @@ import '../model/user_model.dart';
 import '../services/data_service.dart';
 
 class UserProvider with ChangeNotifier {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   List<User> _users = [];
   List<User> get users => _users;
   bool _isLoading = false;
@@ -12,17 +15,6 @@ class UserProvider with ChangeNotifier {
 
   bool _isSearching = false;
   bool get isSearching => _isSearching;
-
-  Future<void> loadUsers() async {
-    _isLoading = true;
-    notifyListeners();
-
-    DataService dataService = DataService();
-    _users = await dataService.fetchUsers();
-
-    _isLoading = false;
-    notifyListeners();
-  }
 
   void searchUsers(String query) {
     _isSearching = query.isNotEmpty;
@@ -34,8 +26,33 @@ class UserProvider with ChangeNotifier {
       return _users;
     }
     return _users.where((user) {
-      return user.firstName.toLowerCase().contains(query.toLowerCase()) || user.lastName.toLowerCase().contains(query.toLowerCase());
+      return user.first_name.toLowerCase().contains(query.toLowerCase()) || user.last_name.toLowerCase().contains(query.toLowerCase());
     }).toList();
+  }
+
+  Future<void> loadUsers() async {
+    _isLoading = true;
+    notifyListeners();
+
+    DataService dataService = DataService();
+    _users = await dataService.fetchUsers();
+
+    await fetchUsersFromFirebase();
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> fetchUsersFromFirebase({int limit = 10, DocumentSnapshot? lastDocument}) async {
+    Query query = _firestore.collection('users').limit(limit);
+
+    if (lastDocument != null) {
+      query = query.startAfterDocument(lastDocument);
+    }
+
+    QuerySnapshot querySnapshot = await query.get();
+    _users.addAll(querySnapshot.docs.map((doc) => User.fromDocument(doc)).toList());
+
+    notifyListeners();
   }
 
   static Future<void> openInBrowser(String url) async {

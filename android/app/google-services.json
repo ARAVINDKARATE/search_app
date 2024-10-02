@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737418583811",
+    "project_id": "search-app-46c6b",
+    "storage_bucket": "search-app-46c6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737418583811:android:cd4559f543f5bbb3691336",
+        "android_client_info": {
+          "package_name": "com.example.search_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNJVrGIfozoYb1dAeTUKyIapSBtZ0pXKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
