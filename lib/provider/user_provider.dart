@@ -62,9 +62,16 @@ class UserProvider with ChangeNotifier {
   static Future<void> openInBrowser(String url) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
+      try {
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+      } catch (e) {
+        print('Error launching URL: $e');
+      }
     } else {
-      throw 'Could not launch $url';
+      print('Could not launch $url');
     }
   }
 
@@ -93,7 +100,7 @@ class UserProvider with ChangeNotifier {
         openInBrowser('https://girmantech.com');
         break;
       case 1:
-        UserProvider.openInBrowser('https://www.linkedin.com/company/girmantech/');
+        openInBrowser('https://www.linkedin.com/company/girmantech/');
         break;
       case 2:
         sendEmail('contact@girmantech.com');
