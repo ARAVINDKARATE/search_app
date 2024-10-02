@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../model/user_model.dart';
-import '../services/data_service.dart';
+// import '../services/data_service.dart';
 
 class UserProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -15,6 +15,8 @@ class UserProvider with ChangeNotifier {
 
   bool _isSearching = false;
   bool get isSearching => _isSearching;
+
+  int n = 0;
 
   void searchUsers(String query) {
     _isSearching = query.isNotEmpty;
@@ -34,8 +36,10 @@ class UserProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    DataService dataService = DataService();
-    _users = await dataService.fetchUsers();
+    // This is for fetchin and Uploading the data to Firebase
+    // I have executed it once and commented it to increase the performace of the app
+    // DataService dataService = DataService();
+    // _users = await dataService.fetchUsers();
 
     await fetchUsersFromFirebase();
     _isLoading = false;

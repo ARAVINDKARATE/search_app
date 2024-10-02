@@ -11,9 +11,8 @@ class DataService {
     final String response = await rootBundle.loadString('assets/json/user_list.json');
     final List<dynamic> data = json.decode(response);
     _users = data.map((json) => User.fromJson(json)).toList();
-    // This is for fetchin and Uploading the data to Firebase
-    // I have executed it once and commented it to increase the performace of the app
-    // await uploadUsersToFirebase(_users);
+
+    await uploadUsersToFirebase(_users);
     return _users;
   }
 

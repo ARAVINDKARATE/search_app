@@ -13,13 +13,13 @@ class HomeScreenState extends State<HomeScreen> {
   bool showLogo = true;
   String _searchQuery = '';
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<UserProvider>(context, listen: false).loadUsers();
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     Provider.of<UserProvider>(context, listen: false).loadUsers();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
